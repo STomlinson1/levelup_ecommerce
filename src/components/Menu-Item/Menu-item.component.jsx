@@ -25,7 +25,7 @@ export default withRouter(MenuItem);
 
 /*
 	withRouter gives components access to the history object.
-	withRouter is a higher order function that takes a component as an arguement
+	withRouter is a higher order component that takes a component as an arguement
 	and returns a modified version with the history object
 
 */
