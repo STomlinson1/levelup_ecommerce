@@ -1,0 +1,31 @@
+.header {
+	height: 70px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+
+	.logo-container {
+		height: 100%;
+		width: 70px;
+		padding: 25px;
+
+		.logo {
+			transform: translateY(-15px);
+		}
+	}
+
+	.options {
+		width: 50%;
+		height: 100%;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+
+		.option {
+			font-size: 18px;
+			margin-left: 30px;
+			text-decoration: none;
+			color: black;
+		}
+	}
+}

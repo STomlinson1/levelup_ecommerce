@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import Header from '../Header/Header.component';
 import HomePage from '../../pages/HomePage/homepage.component';
 import ShopPage from '../../pages/ShopPage/ShopPage.component';
 
@@ -8,6 +9,7 @@ import './App.styles.scss';
 
 const App = () => (
 	<div>
+		<Header />
 		<Switch>
 			<Route exact path="/" component={HomePage} />
 			<Route exact path="/shop" component={ShopPage} />
