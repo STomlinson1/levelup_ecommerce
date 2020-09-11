@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setCurrentUser } from '../../redux/user/user.actions';
 
 import Header from '../Header/Header.component';
 import HomePage from '../../pages/HomePage/homepage.component';
@@ -10,9 +12,7 @@ import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 import './App.styles.scss';
 
-const App = () => {
-	const [ currentUser, setCurrentUser ] = useState(null);
-
+const App = ({ setCurrentUser }) => {
 	useEffect(() => {
 		let unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
 			if (userAuth) {
@@ -36,18 +36,21 @@ const App = () => {
 
 	return (
 		<div>
-			<Header currentUser={currentUser} />
+			<Header />
 			<Switch>
 				<Route exact path="/" component={HomePage} />
 				<Route exact path="/shop" component={ShopPage} />
 				<Route exact path="/signin" component={SignInSignUpPage} />
 			</Switch>
-			{console.log(currentUser)}
 		</div>
 	);
 };
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+	setCurrentUser : (user) => dispatch(setCurrentUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(App);
 
 /*
 Switch - when switch sees something match a path, It will only render that component
