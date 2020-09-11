@@ -42,6 +42,7 @@ const App = () => {
 				<Route exact path="/shop" component={ShopPage} />
 				<Route exact path="/signin" component={SignInSignUpPage} />
 			</Switch>
+			{console.log(currentUser)}
 		</div>
 	);
 };
