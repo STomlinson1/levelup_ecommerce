@@ -13,8 +13,26 @@ export default function SignUp() {
 	const [ password, setPassword ] = useState('');
 	const [ confirmPassword, setConfirmPassword ] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		if (password !== confirmPassword) {
+			alert("Passwords don't match");
+			return;
+		}
+
+		try {
+			const { user } = await auth.createUserWithEmailAndPassword(email, password);
+
+			await createUserProfileDocument(user, { displayName });
+
+			setDisplayName('');
+			setEmail('');
+			setPassword('');
+			setConfirmPassword('');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleDisplayName = (e) => {
@@ -32,8 +50,8 @@ export default function SignUp() {
 
 	return (
 		<div className="sign-up">
-			<h2 className="title">Sign Up</h2>
-			<span>Enter your information</span>
+			<h2 className="title">I do not have an account</h2>
+			<span>Sign up with your email and password</span>
 			<form onSubmit={handleSubmit}>
 				<FormInput
 					handleChange={handleDisplayName}
