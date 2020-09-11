@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Header from '../Header/Header.component';
@@ -6,18 +6,35 @@ import HomePage from '../../pages/HomePage/homepage.component';
 import ShopPage from '../../pages/ShopPage/ShopPage.component';
 import SignInSignUpPage from '../../pages/Sign-In-Sign-Up-Page/signInSignUp.component';
 
+import { auth } from '../../firebase/firebase.utils';
+
 import './App.styles.scss';
 
-const App = () => (
-	<div>
-		<Header />
-		<Switch>
-			<Route exact path="/" component={HomePage} />
-			<Route exact path="/shop" component={ShopPage} />
-			<Route exact path="/signin" component={SignInSignUpPage} />
-		</Switch>
-	</div>
-);
+const App = () => {
+	const [ currentUser, setCurrentUser ] = useState(null);
+
+	useEffect(() => {
+		let unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+			setCurrentUser(user);
+			console.log(user);
+		});
+
+		return () => {
+			unsubscribeFromAuth();
+		};
+	}, []);
+
+	return (
+		<div>
+			<Header currentUser={currentUser} />
+			<Switch>
+				<Route exact path="/" component={HomePage} />
+				<Route exact path="/shop" component={ShopPage} />
+				<Route exact path="/signin" component={SignInSignUpPage} />
+			</Switch>
+		</div>
+	);
+};
 
 export default App;
 
