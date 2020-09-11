@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../../redux/user/user.actions';
 
@@ -12,7 +12,7 @@ import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 import './App.styles.scss';
 
-const App = ({ setCurrentUser }) => {
+const App = ({ setCurrentUser, currentUser }) => {
 	useEffect(() => {
 		let unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
 			if (userAuth) {
@@ -40,17 +40,25 @@ const App = ({ setCurrentUser }) => {
 			<Switch>
 				<Route exact path="/" component={HomePage} />
 				<Route exact path="/shop" component={ShopPage} />
-				<Route exact path="/signin" component={SignInSignUpPage} />
+				<Route
+					exact
+					path="/signin"
+					render={() => (currentUser ? <Redirect to="/" /> : <SignInSignUpPage />)}
+				/>
 			</Switch>
 		</div>
 	);
 };
 
+const mapStateToProps = ({ user }) => ({
+	currentUser : user.currentUser
+});
+
 const mapDispatchToProps = (dispatch) => ({
 	setCurrentUser : (user) => dispatch(setCurrentUser(user))
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 /*
 Switch - when switch sees something match a path, It will only render that component
@@ -66,4 +74,9 @@ Switch - when switch sees something match a path, It will only render that compo
 					useful for dynamic routing
 
 			the history prop gives us access to history.push('where we want to go')
+
+Redirect is used to redirect a user based on a condition. See line 46.
+
+			
+
 */
