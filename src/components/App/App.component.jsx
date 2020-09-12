@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 import { setCurrentUser } from '../../redux/user/user.actions';
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { selectCurrentUser } from '../../redux/user/user.selector';
 
 import Header from '../Header/Header.component';
 import HomePage from '../../pages/HomePage/homepage.component';
 import ShopPage from '../../pages/ShopPage/ShopPage.component';
 import SignInSignUpPage from '../../pages/Sign-In-Sign-Up-Page/signInSignUp.component';
-
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import CheckoutPage from '../../pages/CheckoutPage/CheckoutPage.component';
 
 import './App.styles.scss';
 
@@ -39,7 +42,8 @@ const App = ({ setCurrentUser, currentUser }) => {
 			<Header />
 			<Switch>
 				<Route exact path="/" component={HomePage} />
-				<Route exact path="/shop" component={ShopPage} />
+				<Route path="/shop" component={ShopPage} />
+				<Route exact path="/checkout" component={CheckoutPage} />
 				<Route
 					exact
 					path="/signin"
@@ -50,8 +54,8 @@ const App = ({ setCurrentUser, currentUser }) => {
 	);
 };
 
-const mapStateToProps = ({ user }) => ({
-	currentUser : user.currentUser
+const mapStateToProps = createStructuredSelector({
+	currentUser : selectCurrentUser
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -76,7 +80,4 @@ Switch - when switch sees something match a path, It will only render that compo
 			the history prop gives us access to history.push('where we want to go')
 
 Redirect is used to redirect a user based on a condition. See line 46.
-
-			
-
 */
