@@ -1,10 +1,10 @@
 .checkout-page {
 	width: 55%;
-	min-height: 90vh;
+	min-height: 75vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 50px auto 0;
+	margin: 50px auto 100px;
 
 	.checkout-header {
 		width: 100%;
@@ -27,5 +27,16 @@
 		margin-top: 30px;
 		margin-left: auto;
 		font-size: 36px;
+	}
+
+	.test-warning {
+		font-size: 1.5rem;
+		color: red;
+		text-align: center;
+		margin: 1rem 0;
+	}
+
+	button {
+		margin-left: auto;
 	}
 }

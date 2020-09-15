@@ -8,6 +8,7 @@ import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 
 import Header from '../Header/Header.component';
+import Footer from '../Footer/Footer.component';
 import HomePage from '../../pages/HomePage/homepage.component';
 import ShopPage from '../../pages/ShopPage/ShopPage.component';
 import SignInSignUpPage from '../../pages/Sign-In-Sign-Up-Page/signInSignUp.component';
@@ -50,6 +51,7 @@ const App = ({ setCurrentUser, currentUser }) => {
 					render={() => (currentUser ? <Redirect to="/" /> : <SignInSignUpPage />)}
 				/>
 			</Switch>
+			<Footer />
 		</div>
 	);
 };
